@@ -11,23 +11,28 @@ module YoutubeAPI
   private ANDROID_SDK_VERSION = 30_i64
   private IOS_APP_VERSION     = "17.30.1"
 
-  # Enumerate used to select one of the clients supported by the API
+  # Enumerate used to select one of the clients supported by the API.
+  # Integer values correspond to the numeric values of the various
+  # innertube clients, except for anything > 1000, which are clients
+  # with variations for invidious needs.
   enum ClientType
-    Web
-    WebEmbeddedPlayer
-    WebMobile
-    WebScreenEmbed
+    Web               =  1
+    WebEmbeddedPlayer = 56
+    WebMobile         =  2
 
-    Android
-    AndroidEmbeddedPlayer
-    AndroidScreenEmbed
+    WebScreenEmbed = 1001
 
-    IOS
-    IOSEmbedded
-    IOSMusic
+    Android               =  3
+    AndroidEmbeddedPlayer = 55
 
-    TvHtml5
-    TvHtml5ScreenEmbed
+    AndroidScreenEmbed = 1055
+
+    IOS         =  5
+    IOSEmbedded = 66
+    IOSMusic    = 26
+
+    TvHtml5            =  7
+    TvHtml5ScreenEmbed = 85
   end
 
   # List of hard-coded values used by the different clients
@@ -39,7 +44,7 @@ module YoutubeAPI
       screen:  "WATCH_FULL_SCREEN",
     },
     ClientType::WebEmbeddedPlayer => {
-      name:    "WEB_EMBEDDED_PLAYER", # 56
+      name:    "WEB_EMBEDDED_PLAYER",
       version: "1.20220803.01.00",
       api_key: DEFAULT_API_KEY,
       screen:  "EMBED",
@@ -65,12 +70,12 @@ module YoutubeAPI
       android_sdk_version: ANDROID_SDK_VERSION,
     },
     ClientType::AndroidEmbeddedPlayer => {
-      name:    "ANDROID_EMBEDDED_PLAYER", # 55
+      name:    "ANDROID_EMBEDDED_PLAYER",
       version: ANDROID_APP_VERSION,
       api_key: DEFAULT_API_KEY,
     },
     ClientType::AndroidScreenEmbed => {
-      name:                "ANDROID", # 3
+      name:                "ANDROID",
       version:             ANDROID_APP_VERSION,
       api_key:             DEFAULT_API_KEY,
       screen:              "EMBED",
@@ -80,17 +85,17 @@ module YoutubeAPI
     # IOS
 
     ClientType::IOS => {
-      name:    "IOS", # 5
+      name:    "IOS",
       version: IOS_APP_VERSION,
       api_key: "AIzaSyB-63vPrdThhKuerbB2N_l7Kwwcxj6yUAc",
     },
     ClientType::IOSEmbedded => {
-      name:    "IOS_MESSAGES_EXTENSION", # 66
+      name:    "IOS_MESSAGES_EXTENSION",
       version: IOS_APP_VERSION,
       api_key: DEFAULT_API_KEY,
     },
     ClientType::IOSMusic => {
-      name:    "IOS_MUSIC", # 26
+      name:    "IOS_MUSIC",
       version: "4.32",
       api_key: "AIzaSyBAETezhkwP0ZWA02RsqT1zu78Fpt0bC_s",
     },
@@ -98,12 +103,12 @@ module YoutubeAPI
     # TV app
 
     ClientType::TvHtml5 => {
-      name:    "TVHTML5", # 7
+      name:    "TVHTML5",
       version: "7.20220325",
       api_key: DEFAULT_API_KEY,
     },
     ClientType::TvHtml5ScreenEmbed => {
-      name:    "TVHTML5_SIMPLY_EMBEDDED_PLAYER", # 85
+      name:    "TVHTML5_SIMPLY_EMBEDDED_PLAYER",
       version: "2.0",
       api_key: DEFAULT_API_KEY,
       screen:  "EMBED",
