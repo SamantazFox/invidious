@@ -158,6 +158,7 @@ module YoutubeAPI::Clients
     "(Macintosh; Intel Mac OS X 10_15_6",
     "(Macintosh; Intel Mac OS X 10_15_7",
     "(Windows NT 6.1; Win64; x64",
+    "(Windows NT 10.0; Win64; x64",
     "(Windows NT 10.0; WOW64",
     "(X11; Linux x86_64",
     "(X11; Ubuntu; Linux x86_64",
@@ -204,23 +205,37 @@ module YoutubeAPI::Clients
     ") AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36 Edg/102.0.1245.39",
   ]
 
+  # Opera, desktop-only
+  BROWSERS_OPERA = [
+    "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.93 Safari/537.36 OPR/82.0.4227.33",
+    "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.82 Safari/537.36 OPR/84.0.4316.14",
+    "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.84 Safari/537.36 OPR/85.0.4341.39",
+    "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36 OPR/86.0.4363.50",
+    "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36 OPR/86.0.4363.59",
+    "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.67 Safari/537.36 OPR/87.0.4390.58",
+    "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.115 Safari/537.36 OPR/88.0.4412.85",
+    "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.134 Safari/537.36 OPR/88.0.4412.53",
+    "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.134 Safari/537.36 OPR/89.0.4447.98",
+    "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.66 Safari/537.36 OPR/89.0.4447.38",
+  ]
+
   # Firefox, android & desktop
   BROWSERS_FIREFOX = [
-    "; rv:91.0) Gecko/20100101 Firefox/91.0",
-    "; rv:92.0) Gecko/20100101 Firefox/92.0",
-    "; rv:93.0) Gecko/20100101 Firefox/93.0",
-    "; rv:94.0) Gecko/20100101 Firefox/94.0",
-    "; rv:95.0) Gecko/20100101 Firefox/95.0",
     "; rv:96.0) Gecko/20100101 Firefox/96.0",
     "; rv:97.0) Gecko/20100101 Firefox/97.0",
     "; rv:98.0) Gecko/20100101 Firefox/98.0",
     "; rv:99.0) Gecko/20100101 Firefox/99.0",
     "; rv:100.0) Gecko/20100101 Firefox/100.0",
     "; rv:101.0) Gecko/20100101 Firefox/101.0",
+    "; rv:102.0) Gecko/20100101 Firefox/102.0",
     "; rv:102.0) Gecko/102.0 Firefox/102.0",
+    "; rv:103.0) Gecko/20100101 Firefox/103.0",
     "; rv:103.0) Gecko/103.0 Firefox/103.0",
+    "; rv:104.0) Gecko/20100101 Firefox/104.0",
     "; rv:104.0) Gecko/104.0 Firefox/104.0",
   ]
+
+  BROWSERS_DESKTOP = BROWSERS_EDGE + BROWSERS_FIREFOX + BROWSERS_OPERA
 
   # -------------------
   #  UA crafting
@@ -257,7 +272,7 @@ module YoutubeAPI::Clients
     when .android?
       return BROWSERS_FIREFOX.sample
     when .desktop?
-      return (BROWSERS_EDGE + BROWSERS_FIREFOX).sample
+      return BROWSERS_DESKTOP.sample
     when .iphone?
       return "Version/#{IPADOS_VERSION_LATEST.join('.')} Mobile/#{IPADOS_BUILD_LATEST} Safari/604.1"
     when .ipad?
