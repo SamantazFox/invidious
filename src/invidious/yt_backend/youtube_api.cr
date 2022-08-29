@@ -7,105 +7,6 @@ module YoutubeAPI
 
   private DEFAULT_API_KEY = "AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8"
 
-  private ANDROID_APP_VERSION = "17.29.35"
-  private ANDROID_SDK_VERSION = 30_i64
-  private IOS_APP_VERSION     = "17.30.1"
-
-  # Enumerate used to select one of the clients supported by the API.
-  # Integer values correspond to the numeric values of the various
-  # innertube clients, except for anything > 1000, which are clients
-  # with variations for invidious needs.
-  enum ClientType
-    Web               =  1
-    WebEmbeddedPlayer = 56
-    WebMobile         =  2
-
-    WebScreenEmbed = 1001
-
-    Android               =  3
-    AndroidEmbeddedPlayer = 55
-
-    AndroidScreenEmbed = 1055
-
-    IOS         =  5
-    IOSEmbedded = 66
-    IOSMusic    = 26
-
-    TvHtml5            =  7
-    TvHtml5ScreenEmbed = 85
-  end
-
-  # List of hard-coded values used by the different clients
-  HARDCODED_CLIENTS = {
-    ClientType::Web => {
-      name:    "WEB",
-      version: "2.20220804.07.00",
-      screen:  "WATCH_FULL_SCREEN",
-    },
-    ClientType::WebEmbeddedPlayer => {
-      name:    "WEB_EMBEDDED_PLAYER",
-      version: "1.20220803.01.00",
-      screen:  "EMBED",
-    },
-    ClientType::WebMobile => {
-      name:    "MWEB",
-      version: "2.20220805.01.00",
-    },
-    ClientType::WebScreenEmbed => {
-      name:    "WEB",
-      version: "2.20220804.00.00",
-      screen:  "EMBED",
-    },
-
-    # Android
-
-    ClientType::Android => {
-      name:                "ANDROID",
-      version:             ANDROID_APP_VERSION,
-      api_key:             "AIzaSyA8eiZmM1FaDVjRy-df2KTyQ_vz_yYM39w",
-      android_sdk_version: ANDROID_SDK_VERSION,
-    },
-    ClientType::AndroidEmbeddedPlayer => {
-      name:    "ANDROID_EMBEDDED_PLAYER",
-      version: ANDROID_APP_VERSION,
-    },
-    ClientType::AndroidScreenEmbed => {
-      name:                "ANDROID",
-      version:             ANDROID_APP_VERSION,
-      screen:              "EMBED",
-      android_sdk_version: ANDROID_SDK_VERSION,
-    },
-
-    # IOS
-
-    ClientType::IOS => {
-      name:    "IOS",
-      version: IOS_APP_VERSION,
-      api_key: "AIzaSyB-63vPrdThhKuerbB2N_l7Kwwcxj6yUAc",
-    },
-    ClientType::IOSEmbedded => {
-      name:    "IOS_MESSAGES_EXTENSION",
-      version: IOS_APP_VERSION,
-    },
-    ClientType::IOSMusic => {
-      name:    "IOS_MUSIC",
-      version: "4.32",
-      api_key: "AIzaSyBAETezhkwP0ZWA02RsqT1zu78Fpt0bC_s",
-    },
-
-    # TV app
-
-    ClientType::TvHtml5 => {
-      name:    "TVHTML5",
-      version: "7.20220325",
-    },
-    ClientType::TvHtml5ScreenEmbed => {
-      name:    "TVHTML5_SIMPLY_EMBEDDED_PLAYER",
-      version: "2.0",
-      screen:  "EMBED",
-    },
-  }
-
   ####################################################################
   # struct ClientConfig
   #
@@ -131,7 +32,7 @@ module YoutubeAPI
   struct ClientConfig
     # Type of client to emulate.
     # See `enum ClientType` and `HARDCODED_CLIENTS`.
-    property client_type : ClientType
+    property client_type : Clients::ClientType
 
     # Region to provide to youtube, e.g to alter search results
     # (this is passed as the `gl` parameter).
@@ -144,7 +45,7 @@ module YoutubeAPI
     # Initialization function
     def initialize(
       *,
-      @client_type = ClientType::Web,
+      @client_type = Clients::ClientType::Web,
       @region = "US",
       @proxy_region = nil
     )
@@ -153,26 +54,26 @@ module YoutubeAPI
     # Getter functions that provides easy access to hardcoded clients
     # parameters (name/version strings and related API key)
     def name : String
-      HARDCODED_CLIENTS[@client_type][:name]
+      Clients::HARDCODED_CLIENTS[@client_type][:name]
     end
 
     # :ditto:
     def version : String
-      HARDCODED_CLIENTS[@client_type][:version]
+      Clients::HARDCODED_CLIENTS[@client_type][:version]
     end
 
     # :ditto:
     def api_key : String
-      HARDCODED_CLIENTS[@client_type][:api_key]? || DEFAULT_API_KEY
+      Clients::HARDCODED_CLIENTS[@client_type][:api_key]? || DEFAULT_API_KEY
     end
 
     # :ditto:
     def screen : String
-      HARDCODED_CLIENTS[@client_type][:screen]? || ""
+      Clients::HARDCODED_CLIENTS[@client_type][:screen]? || ""
     end
 
     def android_sdk_version : Int64?
-      HARDCODED_CLIENTS[@client_type][:android_sdk_version]?
+      Clients::HARDCODED_CLIENTS[@client_type][:android_sdk_version]?
     end
 
     # Convert to string, for logging purposes

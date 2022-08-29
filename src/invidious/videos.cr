@@ -889,7 +889,7 @@ def extract_video_info(video_id : String, proxy_region : String? = nil, context_
   # Init client config for the API
   client_config = YoutubeAPI::ClientConfig.new(proxy_region: proxy_region)
   if context_screen == "embed"
-    client_config.client_type = YoutubeAPI::ClientType::TvHtml5ScreenEmbed
+    client_config.client_type = YoutubeAPI::Clients::ClientType::TvHtml5ScreenEmbed
   end
 
   # Fetch data from the player endpoint
@@ -931,9 +931,9 @@ def extract_video_info(video_id : String, proxy_region : String? = nil, context_
   # https://github.com/TeamNewPipe/NewPipeExtractor/issues/562
   if reason.nil?
     if context_screen == "embed"
-      client_config.client_type = YoutubeAPI::ClientType::AndroidScreenEmbed
+      client_config.client_type = YoutubeAPI::Clients::ClientType::AndroidScreenEmbed
     else
-      client_config.client_type = YoutubeAPI::ClientType::Android
+      client_config.client_type = YoutubeAPI::Clients::ClientType::Android
     end
     android_player = YoutubeAPI.player(video_id: video_id, params: "", client_config: client_config)
 
