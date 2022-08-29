@@ -148,6 +148,12 @@ module YoutubeAPI::Clients
     "SM-A102U",
     "SM-G960U",
     "SM-N960U",
+    "SM-A525M",
+    "YAL-L41",
+    "M2101K7AI",
+    "RMX3171",
+    "SM-A515F",
+    "moto g31",
     "LM-Q720",
     "LM-X420",
     "LM-Q710(FGN)",
@@ -158,6 +164,7 @@ module YoutubeAPI::Clients
     "(Macintosh; Intel Mac OS X 10_15_6",
     "(Macintosh; Intel Mac OS X 10_15_7",
     "(Windows NT 6.1; Win64; x64",
+    "(Windows NT 6.3; Win64; x64",
     "(Windows NT 10.0; Win64; x64",
     "(Windows NT 10.0; WOW64",
     "(X11; Linux x86_64",
@@ -179,6 +186,7 @@ module YoutubeAPI::Clients
     Android
     Iphone
     Ipad
+    TV
   end
 
   # -------------------
@@ -274,9 +282,9 @@ module YoutubeAPI::Clients
     when .desktop?
       return BROWSERS_DESKTOP.sample
     when .iphone?
-      return "Version/#{IPADOS_VERSION_LATEST.join('.')} Mobile/#{IPADOS_BUILD_LATEST} Safari/604.1"
+      return ") Version/#{IPADOS_VERSION_LATEST.join('.')} Mobile/#{IPADOS_BUILD_LATEST} Safari/604.1"
     when .ipad?
-      return "Version/#{IPADOS_VERSION_LATEST.join('.')} Mobile/#{IPADOS_BUILD_LATEST} Safari/604.1"
+      return ") Version/#{IPADOS_VERSION_LATEST.join('.')} Mobile/#{IPADOS_BUILD_LATEST} Safari/604.1"
     end
   end
 
