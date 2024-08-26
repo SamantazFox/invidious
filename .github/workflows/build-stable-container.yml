@@ -45,7 +45,7 @@ jobs:
             suffix=-arm64
           tags: |
             type=semver,pattern={{version}}
-            type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', 'master') }}
+            type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', 'test') }}
           labels: |
             quay.expires-after=12w
 
