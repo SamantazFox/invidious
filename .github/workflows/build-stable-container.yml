@@ -1,4 +1,4 @@
-name: Build and release container
+name: Build and release container (test)
 
 on:
   workflow_dispatch:
