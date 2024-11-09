@@ -73,7 +73,7 @@ private module Parsers
       # Instead, in its place is the amount of people currently watching. This behavior should be replicated
       # on Invidious once all features of livestreams are supported. On an unrelated note, defaulting to the current
       # time for publishing isn't a good idea.
-      published = item_contents.dig?("publishedTimeText", "simpleText").try { |t| decode_date(t.as_s) } || Time.local
+      published = item_contents.dig?("publishedTimeText", "simpleText").try { |t| decode_date(t.as_s) } || Time.utc
 
       # Typically views are stored under a "simpleText" in the "viewCountText". However, for
       # livestreams and premiered it is stored under a "runs" array: [{"text":123}, {"text": "watching"}]

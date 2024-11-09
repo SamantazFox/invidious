@@ -143,7 +143,8 @@ module Invidious::Database::Users
   def clear_notifications(user : User)
     request = <<-SQL
       UPDATE users
-      SET notifications = '{}', updated = now()
+      SET notifications = '{}',
+          updated = now() AT TIME ZONE 'UTC'
       WHERE email = $1
     SQL
 
